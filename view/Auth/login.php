@@ -39,6 +39,20 @@
         <div class="absolute right-[-10%] top-[-10%] h-[520px] w-[820px] rounded-full bg-lime/10 blur-[100px]"></div>
     </div>
 
+    <?php if (!empty($_SESSION['error'])): ?>
+        <div class="mb-4 rounded-xl bg-red-500/20 px-4 py-3 text-red-400 text-sm">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="mb-4 rounded-xl bg-green-500/20 px-4 py-3 text-green-400 text-sm">
+            <?= $_SESSION['success'] ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
     <!-- navbar -->
     <header class="border-b border-white/10 bg-carbon/30 backdrop-blur-xl">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
@@ -98,7 +112,7 @@
             </div>
 
             <!-- No JS: action points to a backend route later -->
-            <form action="#" method="post" class="mt-6 grid gap-4">
+            <form action="/login" method="post" class="mt-6 grid gap-4">
                 <div>
                     <label class="text-xs font-semibold text-slate-300">Email</label>
                     <input name="email" type="email" required placeholder="ex: you@domain.com"

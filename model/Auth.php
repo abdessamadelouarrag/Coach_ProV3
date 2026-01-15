@@ -19,7 +19,7 @@ class Auth{
 
         $stmt = $this->pdo->prepare($sql);
 
-        $stmt->execute([
+        return $stmt->execute([
             ":email" => $email,
             ":fullname" => $fullname,
             ":password" => $password_hash,
@@ -41,10 +41,12 @@ class Auth{
         if(!$user){
             return false;
         }
-        if(!password_verify($password, $user['mot_de_passe'])){
+        
+        if(!password_verify($password, $user['password'])){
             return false;
         }
 
         return $user;
     }
 }
+?>

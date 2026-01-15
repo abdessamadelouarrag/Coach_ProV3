@@ -1,6 +1,5 @@
 <?php
-declare(strict_types=1);
-
+// declare(strict_types=1);
 session_start();
 
 $path = $_SERVER['REQUEST_URI'];
@@ -14,6 +13,7 @@ $routes = [
     '/coach'   => ['CoachController', 'coach'],
     '/sportif' => ['SportifController', 'sportif'],
     '/signup' => ['AuthController', 'signup'],
+    '/details' => ['SportifController', 'details']
 ];
 
 if (!isset($routes[$path])) {
