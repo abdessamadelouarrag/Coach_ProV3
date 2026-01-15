@@ -121,21 +121,6 @@
                     </a>
                 </div>
 
-                <!-- Role -->
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div class="text-xs font-semibold text-slate-300">Rôle</div>
-                    <div class="mt-3 grid grid-cols-2 gap-2">
-                        <label class="flex cursor-pointer items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold hover:border-lime/30">
-                            <span>Sportif</span>
-                            <input type="radio" name="role" value="sportif" checked class="h-4 w-4 accent-lime">
-                        </label>
-                        <label class="flex cursor-pointer items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold hover:border-lime/30">
-                            <span>Coach</span>
-                            <input type="radio" name="role" value="coach" class="h-4 w-4 accent-lime">
-                        </label>
-                    </div>
-                </div>
-
                 <button type="submit"
                     class="mt-1 w-full rounded-2xl bg-lime px-5 py-3 font-semibold text-black hover:brightness-110">
                     Connexion

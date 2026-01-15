@@ -1,20 +1,34 @@
 <?php
 
 class User{
-    protected $nom;
-    protected $prenom;
+    protected $fullname;
+    protected $role;
     protected $email;
     protected $password;
 
-    public function __construct($nom, $prenom, $email, $password)
+    public function __construct($email, $fullname, $password, $role)
     {
-        $this->nom = $nom;
-        $this->prenom = $prenom;
+        $this->fullname = $fullname;
         $this->email = $email;
         $this->password = $password;
+        $this->role = $role;
     }
 
-    public function insertInfos(){
-        $sql = "INSERT INTO users ()";
+    public function getFullname(){
+        return $this->fullname;
     }
+
+    public function setFullname($fullname){
+        $this->fullname = $fullname;
+    }
+
+    public function getRole(){
+        return $this->role;
+    }
+
+    public function setRole($role){
+        $this->role = $role;
+    }
+
+
 }
