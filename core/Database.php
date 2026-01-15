@@ -5,7 +5,7 @@ class Database {
     private static $instance = null;
     private $pdo;
 
-    private function __construct() {
+    public function __construct() {
         $host = '127.0.0.1';
         $port = '5432';
         $dbname = 'coachprov3';

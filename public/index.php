@@ -13,6 +13,7 @@ $routes = [
     '/login'   => ['AuthController', 'login'],
     '/coach'   => ['CoachController', 'coach'],
     '/sportif' => ['SportifController', 'sportif'],
+    '/signup' => ['AuthController', 'signup'],
 ];
 
 if (!isset($routes[$path])) {

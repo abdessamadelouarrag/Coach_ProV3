@@ -48,22 +48,21 @@
                 </span>
                 <div class="leading-tight">
                     <div class="font-display text-lg">CoachLink</div>
-                    <div class="text-xs text-slate-400">Sportifs ↔ Coachs</div>
                 </div>
             </a>
 
             <nav class="hidden items-center gap-2 md:flex">
-                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="coaches.html">Trouver un coach</a>
-                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="dashboard-coach.html">Espace coach</a>
-                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="dashboard-sportif.html">Espace sportif</a>
+                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="">Trouver un coach</a>
+                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="">Espace coach</a>
+                <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="">Espace sportif</a>
             </nav>
 
             <div class="flex items-center gap-2">
                 <button id="themeBtn" class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-200 hover:bg-white/10">
                     Glow: ON
                 </button>
-                <a href="coaches.html" class="rounded-xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-110">
-                    Réserver
+                <a href="/login" class="rounded-xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-110">
+                    Login
                 </a>
             </div>
         </div>
@@ -89,11 +88,11 @@
                 </p>
 
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <a href="coaches.html" class="inline-flex items-center justify-center rounded-2xl bg-lime px-5 py-3 font-semibold text-black hover:brightness-110">
-                        Explorer les coachs
+                    <a href="/signup" class="inline-flex items-center justify-center rounded-2xl bg-lime px-5 py-3 font-semibold text-black hover:brightness-110">
+                        Create Account
                     </a>
-                    <a href="dashboard-coach.html" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white hover:bg-white/10">
-                        Devenir coach
+                    <a href="/login" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white hover:bg-white/10">
+                        Login Now
                     </a>
                 </div>
 
@@ -149,17 +148,7 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Sports grid -->
-        <section class="pb-16">
-            <div class="flex items-end justify-between gap-4">
-                <h2 class="font-display text-2xl">Sports populaires</h2>
-                <a href="coaches.html" class="text-sm text-slate-300 hover:text-white">Tout voir</a>
-            </div>
-
-            <div id="sportsGrid" class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-        </section>
+        </section>    
     </main>
 
     <footer class="border-t border-white/10 bg-carbon/30">
