@@ -5,13 +5,38 @@ class AuthController{
 
     public function login(){
 
-        if($_SERVER['REQUEST_METHOD'] === 'PSOT'){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $email = $_POST['email'];
             $password = $_POST['password'];
 
             $checkUser = new Auth();
 
-            $checkUser->checkInfos($email, $password);
+            $user = $checkUser->checkInfos($email, $password);
+
+            if (!$user) {
+                $_SESSION['error'] = "Email or password incorrect";
+                header("Location: /login");
+                exit;
+            }
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['full_name'] = $user['full_name'];
+
+            switch ($user['role']) {
+                case 'coach':
+                    header("Location: /coach");
+                    break;
+
+                case 'sportif':
+                    header("Location: /sportif");
+                    break;
+
+                default:
+                    header("Location: /");
+                    break;
+            }
+            exit;
         }
         require __DIR__ . "/../view/Auth/login.php";
     }

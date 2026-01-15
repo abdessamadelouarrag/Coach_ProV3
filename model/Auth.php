@@ -2,7 +2,7 @@
 require __DIR__ . "/User.php";
 require __DIR__ . "/../core/Database.php";
 
-class Auth extends User{
+class Auth{
 
     private PDO $pdo;
 
@@ -28,7 +28,7 @@ class Auth extends User{
     }
 
     public function checkInfos($email, $password){
-        $sql = "SELECT * FROM users where email = :email";
+        $sql = "SELECT id, email, full_name, password, role FROM users WHERE email = :email LIMIT 1";
 
         $stmt = $this->pdo->prepare($sql);
         

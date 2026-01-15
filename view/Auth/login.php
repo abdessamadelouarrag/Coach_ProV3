@@ -128,7 +128,7 @@
 
                 <div class="text-center text-sm text-slate-400">
                     Pas de compte ?
-                    <a href="signup.php" class="font-semibold text-slate-200 hover:text-lime">Créer un compte</a>
+                    <a href="/signup" class="font-semibold text-slate-200 hover:text-lime">Créer un compte</a>
                 </div>
             </form>
         </section>
