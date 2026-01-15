@@ -1,383 +1,315 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Profil Coach — CoachLink</title>
+  <title>CoachLink — Trouver un coach</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ["Inter","system-ui"], display: ["Sora","Inter","system-ui"] },
-          colors: { midnight:"#0B1220", carbon:"#0E0E10", lime:"#9AFF00", cyan:"#4DE1FF" },
-          boxShadow: { soft: "0 18px 50px rgba(0,0,0,.40)" }
+          fontFamily: { sans: ["Inter","system-ui","sans-serif"], display:["Sora","Inter","sans-serif"] },
+          colors: { midnight:"#0B1220", carbon:"#0E0E10", lime:"#9AFF00", cyanx:"#4DE1FF" },
+          boxShadow: { soft:"0 18px 40px rgba(0,0,0,.35)" }
         }
       }
     }
   </script>
 </head>
-<body class="min-h-screen bg-[radial-gradient(1200px_500px_at_15%_0%,rgba(77,225,255,.12),transparent_60%),radial-gradient(1000px_600px_at_85%_10%,rgba(154,255,0,.10),transparent_55%),linear-gradient(180deg,#0B1220,#0E0E10_70%)] text-slate-100">
+<body class="min-h-screen bg-gradient-to-b from-midnight to-carbon text-slate-50">
+  <div class="pointer-events-none fixed inset-0 -z-10">
+    <div class="absolute left-[-10%] top-[-20%] h-[520px] w-[820px] rounded-full bg-cyanx/12 blur-[90px]"></div>
+    <div class="absolute right-[-10%] top-[-10%] h-[520px] w-[820px] rounded-full bg-lime/10 blur-[100px]"></div>
+  </div>
 
-  <header class="sticky top-0 z-40 border-b border-white/10 bg-carbon/60 backdrop-blur-xl">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="coaches.html" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:border-white/20">← Coachs</a>
-      <a href="index.html" class="font-display">CoachLink</a>
-      <a href="dashboard-sportif.html" class="rounded-2xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-95">Espace Sportif</a>
+  <header class="sticky top-0 z-20 border-b border-white/10 bg-carbon/40 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5 shadow-soft">
+          <span class="h-2.5 w-2.5 rounded-full bg-lime"></span>
+        </span>
+        <div class="leading-tight">
+          <div class="font-display text-lg">CoachLink</div>
+          <div class="text-xs text-slate-400">Trouver un coach</div>
+        </div>
+      </a>
+      <nav class="hidden items-center gap-2 md:flex">
+        <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="coaches.html">Coachs</a>
+        <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="dashboard-coach.html">Espace coach</a>
+        <a class="rounded-xl px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white" href="dashboard-sportif.html">Espace sportif</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="resetBtn" class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-200 hover:bg-white/10">Reset</button>
+        <a href="dashboard-sportif.html" class="rounded-xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-110">Mes réservations</a>
+      </div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-6xl px-6 py-10">
-    <!-- Profile header -->
-    <section class="grid gap-6 lg:grid-cols-3">
-      <div class="lg:col-span-2 overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-soft">
-        <div class="relative">
-          <img id="heroImg" class="h-64 w-full object-cover brightness-90" alt="Coach">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <div id="name" class="font-display text-3xl">—</div>
-                <div class="mt-1 text-slate-300"><span id="sport">—</span> • <span id="city">—</span></div>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="rounded-2xl bg-black/35 px-4 py-2 text-sm">
-                  ⭐ <span id="rating" class="font-semibold">—</span>
-                </div>
-                <div class="rounded-2xl bg-black/35 px-4 py-2 text-sm">
-                  <span class="text-lime font-semibold" id="price">—</span> <span class="text-slate-300">MAD / séance</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-6">
-          <div class="flex flex-wrap gap-2" id="tags"></div>
-
-          <div class="mt-6 grid gap-4 md:grid-cols-2">
-            <div class="rounded-3xl border border-white/10 bg-carbon/30 p-5">
-              <div class="text-sm text-slate-400">À propos</div>
-              <p id="about" class="mt-2 leading-relaxed text-slate-200">
-                —
-              </p>
-            </div>
-            <div class="rounded-3xl border border-white/10 bg-carbon/30 p-5">
-              <div class="text-sm text-slate-400">Certifications</div>
-              <ul class="mt-3 space-y-2 text-slate-200 text-sm" id="certs"></ul>
-            </div>
-          </div>
-
-          <div class="mt-6 rounded-3xl border border-white/10 bg-carbon/30 p-5">
-            <div class="flex items-center justify-between gap-3">
-              <div>
-                <div class="text-sm text-slate-400">Avis</div>
-                <div class="mt-1 font-semibold">Ce que disent les sportifs</div>
-              </div>
-              <button id="addReviewBtn" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:border-white/20">
-                Ajouter un avis
-              </button>
-            </div>
-            <div id="reviews" class="mt-4 grid gap-3 md:grid-cols-2"></div>
-          </div>
-        </div>
+  <main class="mx-auto max-w-6xl px-5 py-10">
+    <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h1 class="font-display text-3xl">Choisir un coach</h1>
+        <p class="mt-1 text-slate-400">Filtre par sport, ville, prix et disponibilité.</p>
       </div>
 
-      <!-- Booking -->
-      <aside class="rounded-[32px] border border-white/10 bg-white/5 shadow-soft p-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-sm text-slate-400">Réservation</div>
-            <div class="font-display text-xl">Choisir un créneau</div>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div class="relative">
+          <input id="q" type="text" placeholder="Rechercher: nom, sport, ville..."
+                 class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-500 focus:border-cyanx/40 sm:w-[320px]"/>
+          <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">⌘K</div>
+        </div>
+
+        <select id="sort"
+                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyanx/40">
+          <option value="recommended">Tri: recommandé</option>
+          <option value="price_asc">Prix: bas → haut</option>
+          <option value="price_desc">Prix: haut → bas</option>
+          <option value="rating_desc">Note: haut → bas</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <section class="mt-6 rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-soft">
+      <div class="grid gap-4 md:grid-cols-4">
+        <div>
+          <div class="text-xs font-semibold text-slate-300">Sport</div>
+          <div id="sportChips" class="mt-2 flex flex-wrap gap-2"></div>
+        </div>
+
+        <div>
+          <div class="text-xs font-semibold text-slate-300">Ville</div>
+          <select id="city"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyanx/40">
+          </select>
+        </div>
+
+        <div>
+          <div class="text-xs font-semibold text-slate-300">Budget (MAD)</div>
+          <div class="mt-2 flex items-center gap-3">
+            <input id="minPrice" type="number" placeholder="Min"
+              class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-500 focus:border-cyanx/40">
+            <input id="maxPrice" type="number" placeholder="Max"
+              class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-500 focus:border-cyanx/40">
           </div>
-          <span id="availBadge" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
-            <span class="h-2 w-2 rounded-full bg-slate-500"></span> —
-          </span>
         </div>
 
-        <div class="mt-4">
-          <div class="text-sm text-slate-400">Cette semaine</div>
-          <div id="slots" class="mt-3 grid gap-2"></div>
+        <div>
+          <div class="text-xs font-semibold text-slate-300">Disponibilité</div>
+          <label class="mt-3 inline-flex cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+            <input id="availableOnly" type="checkbox" class="h-4 w-4 accent-lime">
+            <span>Seulement disponibles</span>
+          </label>
         </div>
+      </div>
+    </section>
 
-        <div class="mt-5 rounded-3xl border border-white/10 bg-carbon/30 p-4 text-sm text-slate-300">
-          Paiement & confirmation dans le dashboard sportif.
-        </div>
+    <!-- Results -->
+    <section class="mt-6">
+      <div class="flex items-center justify-between">
+        <div id="count" class="text-sm text-slate-400"></div>
+        <div class="text-xs text-slate-500">Clique sur un coach pour réserver.</div>
+      </div>
 
-        <a href="coaches.html" class="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold hover:border-white/20">
-          Voir d’autres coachs
-        </a>
-      </aside>
+      <div id="grid" class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
     </section>
   </main>
 
-  <!-- Booking Modal -->
-  <div id="bookModal" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/60"></div>
-    <div class="relative mx-auto mt-20 w-[min(720px,calc(100%-32px))] rounded-3xl border border-white/10 bg-carbon/80 p-5 backdrop-blur-xl shadow-soft">
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <div class="text-sm text-slate-400">Confirmer la séance</div>
-          <div class="mt-1 font-display text-2xl" id="modalTitle">—</div>
-          <div class="mt-1 text-slate-300 text-sm" id="modalMeta">—</div>
-        </div>
-        <button id="closeModal" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10">Esc</button>
-      </div>
-
-      <div class="mt-5 grid gap-3 md:grid-cols-2">
-        <label class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-slate-400">Type de séance</div>
-          <select id="sessionType" class="mt-2 w-full rounded-xl border border-white/10 bg-carbon/60 px-3 py-2 outline-none focus:border-lime/40">
-            <option>Technique</option>
-            <option>Cardio</option>
-            <option>Préparation physique</option>
-            <option>Plan nutrition / récupération</option>
-          </select>
-        </label>
-        <label class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-slate-400">Note au coach (optionnel)</div>
-          <input id="note" class="mt-2 w-full rounded-xl border border-white/10 bg-carbon/60 px-3 py-2 outline-none placeholder:text-slate-500 focus:border-lime/40"
-                 placeholder="Ex: objectif, niveau, besoin…" />
-        </label>
-      </div>
-
-      <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div class="text-sm text-slate-300">
-          Total: <span class="text-lime font-semibold" id="modalPrice">—</span> MAD
-        </div>
-        <button id="confirmBooking" class="inline-flex items-center justify-center rounded-2xl bg-lime px-5 py-3 text-sm font-semibold text-black hover:brightness-95">
-          Confirmer
-        </button>
-      </div>
-
-      <div id="toast" class="mt-4 hidden rounded-2xl border border-lime/30 bg-lime/10 p-4 text-sm text-lime">
-        Réservation enregistrée. Ouvre ton dashboard sportif.
-      </div>
-    </div>
-  </div>
-
-  <!-- Review Modal -->
-  <div id="reviewModal" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/60"></div>
-    <div class="relative mx-auto mt-24 w-[min(680px,calc(100%-32px))] rounded-3xl border border-white/10 bg-carbon/80 p-5 backdrop-blur-xl shadow-soft">
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <div class="text-sm text-slate-400">Ajouter un avis</div>
-          <div class="mt-1 font-display text-2xl">Ton expérience</div>
-        </div>
-        <button id="closeReview" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm hover:bg-white/10">Esc</button>
-      </div>
-
-      <div class="mt-5 grid gap-3 md:grid-cols-2">
-        <label class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-slate-400">Nom</div>
-          <input id="rName" class="mt-2 w-full rounded-xl border border-white/10 bg-carbon/60 px-3 py-2 outline-none placeholder:text-slate-500 focus:border-lime/40" placeholder="Ex: Amine" />
-        </label>
-        <label class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-slate-400">Note</div>
-          <select id="rRating" class="mt-2 w-full rounded-xl border border-white/10 bg-carbon/60 px-3 py-2 outline-none focus:border-lime/40">
-            <option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
-          </select>
-        </label>
-      </div>
-
-      <label class="mt-3 block rounded-2xl border border-white/10 bg-white/5 p-4">
-        <div class="text-xs text-slate-400">Message</div>
-        <textarea id="rMsg" rows="4" class="mt-2 w-full resize-none rounded-xl border border-white/10 bg-carbon/60 px-3 py-2 outline-none placeholder:text-slate-500 focus:border-lime/40"
-                  placeholder="Ex: Très bon coaching, séance structurée…"></textarea>
-      </label>
-
-      <div class="mt-5 flex items-center justify-end gap-2">
-        <button id="saveReview" class="rounded-2xl bg-lime px-5 py-3 text-sm font-semibold text-black hover:brightness-95">Enregistrer</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const COACHES = [
-      {
-        id:1,
-        name:"Sarah B.",
-        sport:"Prépa physique • Athlétisme",
-        city:"Rabat",
-        price:200,
-        rating:4.9,
-        available:true,
-        img:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
-        tags:["Force","Mobilité","Programme","Récupération"],
-        about:"Préparatrice physique (7 ans). Je construis des plans simples et efficaces: force, mobilité, prévention des blessures, progression mesurable.",
-        certs:["Diplôme BPJEPS • Prépa physique","Nutrition sportive (formation)","Spécialité prévention blessures"],
-        slots:["Lun 18:30","Mar 20:00","Jeu 19:00","Sam 10:30"],
-        reviews:[
-          {name:"Amine", rating:5, msg:"Séance claire et intense. J’ai senti la progression dès la 2e semaine."},
-          {name:"Sara", rating:5, msg:"Très pro, bonne correction de posture, programme adapté."}
-        ]
-      },
-      {
-        id:2,
-        name:"Yassine K.",
-        sport:"Football",
-        city:"Casablanca",
-        price:150,
-        rating:4.7,
-        available:true,
-        img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=80",
-        tags:["Tactique","Technique","Cardio","U19"],
-        about:"Coach football orienté technique + lecture de jeu. Objectif: meilleur contrôle, placement, intensité, et décisions plus rapides.",
-        certs:["Licence CAF C","Expérience club U17/U19","Analyse vidéo (niveau 1)"],
-        slots:["Mer 18:00","Jeu 20:00","Dim 09:30"],
-        reviews:[
-          {name:"Younes", rating:5, msg:"Super conseils tactiques, séance très bien structurée."}
-        ]
-      }
+    // ---- Demo data (replace later with DB/API)
+    const coaches = [
+      { id: 1, name: "Yassine A.", sport: "Football", city: "Agadir", price: 250, rating: 4.9, available: true, tags:["Tactique","Vitesse"], img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=70" },
+      { id: 2, name: "Sara E.", sport: "Prépa physique", city: "Marrakech", price: 200, rating: 4.8, available: true, tags:["Force","Mobilité"], img:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=70" },
+      { id: 3, name: "Hamza K.", sport: "Boxe", city: "Casablanca", price: 300, rating: 4.7, available: false, tags:["Footwork","Garde"], img:"https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1200&q=70" },
+      { id: 4, name: "Imane R.", sport: "Natation", city: "Rabat", price: 220, rating: 4.9, available: true, tags:["Technique","Cardio"], img:"https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=70" },
+      { id: 5, name: "Nabil S.", sport: "Tennis", city: "Agadir", price: 280, rating: 4.6, available: true, tags:["Service","Placement"], img:"https://images.unsplash.com/photo-1622163642998-1ea32b0a0b60?auto=format&fit=crop&w=1200&q=70" },
+      { id: 6, name: "Kawtar M.", sport: "Athlétisme", city: "Fès", price: 190, rating: 4.5, available: true, tags:["Sprint","Explosivité"], img:"https://images.unsplash.com/photo-1526401485004-2fda9f6a0a58?auto=format&fit=crop&w=1200&q=70" }
     ];
 
-    const $ = (id)=>document.getElementById(id);
+    const allSports = [...new Set(coaches.map(c => c.sport))];
+    const allCities = ["Toutes"].concat([...new Set(coaches.map(c => c.city))]);
 
-    function getId(){
-      const p = new URLSearchParams(location.search);
-      return parseInt(p.get("id") || "1", 10);
+    // ---- State
+    const state = {
+      sport: null,
+      city: "Toutes",
+      q: "",
+      minPrice: "",
+      maxPrice: "",
+      availableOnly: false,
+      sort: "recommended",
+    };
+
+    // ---- Elements
+    const sportChips = document.getElementById("sportChips");
+    const citySel = document.getElementById("city");
+    const qInput = document.getElementById("q");
+    const minPrice = document.getElementById("minPrice");
+    const maxPrice = document.getElementById("maxPrice");
+    const availableOnly = document.getElementById("availableOnly");
+    const sortSel = document.getElementById("sort");
+    const grid = document.getElementById("grid");
+    const count = document.getElementById("count");
+    const resetBtn = document.getElementById("resetBtn");
+
+    // ---- URL prefill: ?sport=Football
+    const params = new URLSearchParams(location.search);
+    const sportFromUrl = params.get("sport");
+    if (sportFromUrl) state.sport = sportFromUrl;
+
+    // ---- Render chips
+    function renderSportChips() {
+      const chips = ["Tous"].concat(allSports);
+      sportChips.innerHTML = chips.map(s => {
+        const active = (s === "Tous" && !state.sport) || (s === state.sport);
+        return `<button class="px-3 py-2 rounded-full border ${active ? "border-lime/50 bg-lime/10 text-lime" : "border-white/10 bg-white/5 text-slate-200 hover:border-lime/30"} text-xs font-semibold"
+                  data-sport="${s}">${s}</button>`;
+      }).join("");
+
+      sportChips.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const v = btn.dataset.sport;
+          state.sport = (v === "Tous") ? null : v;
+          renderSportChips();
+          render();
+        });
+      });
     }
 
-    function reviewCard(r){
+    function renderCities() {
+      citySel.innerHTML = allCities.map(c => `<option ${c===state.city?"selected":""} value="${c}">${c}</option>`).join("");
+    }
+
+    function matchesFilters(c) {
+      if (state.sport && c.sport !== state.sport) return false;
+      if (state.city !== "Toutes" && c.city !== state.city) return false;
+      if (state.availableOnly && !c.available) return false;
+
+      const q = state.q.trim().toLowerCase();
+      if (q) {
+        const hay = `${c.name} ${c.sport} ${c.city} ${c.tags.join(" ")}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+
+      const min = state.minPrice !== "" ? Number(state.minPrice) : null;
+      const max = state.maxPrice !== "" ? Number(state.maxPrice) : null;
+      if (min !== null && c.price < min) return false;
+      if (max !== null && c.price > max) return false;
+
+      return true;
+    }
+
+    function sortList(list) {
+      const arr = [...list];
+      switch (state.sort) {
+        case "price_asc": return arr.sort((a,b)=>a.price-b.price);
+        case "price_desc": return arr.sort((a,b)=>b.price-a.price);
+        case "rating_desc": return arr.sort((a,b)=>b.rating-a.rating);
+        default:
+          // recommended: available first then rating desc
+          return arr.sort((a,b)=>(Number(b.available)-Number(a.available)) || (b.rating-a.rating));
+      }
+    }
+
+    function card(c) {
       return `
-        <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
-          <div class="flex items-center justify-between">
-            <div class="font-semibold">${r.name}</div>
-            <div class="text-sm text-slate-400">⭐ <span class="text-slate-200 font-semibold">${r.rating}</span></div>
+        <a href="coach.html?id=${c.id}"
+           class="group overflow-hidden rounded-[26px] border border-white/10 bg-white/5 shadow-soft transition hover:-translate-y-0.5 hover:border-lime/30">
+          <div class="relative aspect-[4/3]">
+            <img class="h-full w-full object-cover opacity-90" src="${c.img}" alt="${c.name}">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 via-carbon/10 to-transparent"></div>
+            <div class="absolute left-4 top-4 flex gap-2">
+              <span class="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-slate-200">${c.sport}</span>
+              <span class="rounded-full border ${c.available ? "border-lime/40 bg-lime/10 text-lime":"border-white/10 bg-white/10 text-slate-200"} px-3 py-1 text-xs">
+                ${c.available ? "Disponible" : "Complet"}
+              </span>
+            </div>
           </div>
-          <p class="mt-2 text-sm text-slate-300 leading-relaxed">${r.msg}</p>
-        </div>
+
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-lg font-semibold">${c.name}</div>
+                <div class="mt-1 text-sm text-slate-400">${c.city}</div>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm">
+                ⭐ <span class="font-semibold text-white">${c.rating.toFixed(1)}</span>
+              </div>
+            </div>
+
+            <div class="mt-3 flex flex-wrap gap-2">
+              ${c.tags.slice(0,3).map(t=>`<span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">${t}</span>`).join("")}
+            </div>
+
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-sm text-slate-300">
+                À partir de <span class="font-semibold text-white">${c.price} MAD</span>
+              </div>
+              <div class="text-sm font-semibold text-slate-200 group-hover:text-lime">Voir →</div>
+            </div>
+          </div>
+        </a>
       `;
     }
 
-    function slotBtn(label, disabled){
-      return `
-        <button ${disabled ? "disabled" : ""}
-          class="slotBtn rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm hover:border-white/20 disabled:opacity-40 disabled:hover:border-white/10"
-          data-slot="${label}">
-          <div class="flex items-center justify-between">
-            <div class="font-semibold">${label}</div>
-            <div class="text-lime font-semibold">Choisir</div>
+    function render() {
+      const filtered = coaches.filter(matchesFilters);
+      const sorted = sortList(filtered);
+
+      count.textContent = `${sorted.length} coach(s) trouvés`;
+      grid.innerHTML = sorted.map(card).join("");
+
+      if (!sorted.length) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-[26px] border border-white/10 bg-white/5 p-8 text-center text-slate-300">
+            Aucun résultat. Modifie les filtres ou clique <span class="text-white font-semibold">Reset</span>.
           </div>
-        </button>
-      `;
+        `;
+      }
     }
 
-    function setBadge(available){
-      const badge = $("availBadge");
-      badge.innerHTML = available
-        ? `<span class="h-2 w-2 rounded-full bg-lime"></span> Disponible`
-        : `<span class="h-2 w-2 rounded-full bg-slate-500"></span> Complet`;
-      badge.className = available
-        ? "inline-flex items-center gap-2 rounded-full border border-lime/30 bg-lime/10 px-3 py-1 text-xs text-lime"
-        : "inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300";
-    }
+    // ---- Events
+    qInput.addEventListener("input", e => { state.q = e.target.value; render(); });
+    citySel.addEventListener("change", e => { state.city = e.target.value; render(); });
+    minPrice.addEventListener("input", e => { state.minPrice = e.target.value; render(); });
+    maxPrice.addEventListener("input", e => { state.maxPrice = e.target.value; render(); });
+    availableOnly.addEventListener("change", e => { state.availableOnly = e.target.checked; render(); });
+    sortSel.addEventListener("change", e => { state.sort = e.target.value; render(); });
 
-    const coach = COACHES.find(c => c.id === getId()) || COACHES[0];
-
-    // Fill UI
-    $("heroImg").src = coach.img;
-    $("name").textContent = coach.name;
-    $("sport").textContent = coach.sport;
-    $("city").textContent = coach.city;
-    $("price").textContent = coach.price;
-    $("rating").textContent = coach.rating.toFixed(1);
-    $("about").textContent = coach.about;
-
-    $("tags").innerHTML = coach.tags.map(t => `
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">
-        <span class="h-2 w-2 rounded-full bg-cyan shadow-[0_0_14px_rgba(77,225,255,.55)]"></span>${t}
-      </span>
-    `).join("");
-
-    $("certs").innerHTML = coach.certs.map(c => `<li class="flex gap-2"><span class="text-lime">•</span><span>${c}</span></li>`).join("");
-
-    $("reviews").innerHTML = coach.reviews.map(reviewCard).join("");
-    setBadge(coach.available);
-
-    // Slots
-    const disabledAll = !coach.available;
-    $("slots").innerHTML = coach.slots.map(s => slotBtn(s, disabledAll)).join("");
-
-    // Booking modal logic
-    const modal = $("bookModal");
-    const closeModal = $("closeModal");
-    const confirmBooking = $("confirmBooking");
-    const toast = $("toast");
-    let chosenSlot = null;
-
-    function openModal(slot){
-      chosenSlot = slot;
-      $("modalTitle").textContent = `${coach.name}`;
-      $("modalMeta").textContent = `${slot} • ${coach.city} • ${coach.sport}`;
-      $("modalPrice").textContent = coach.price;
-      toast.classList.add("hidden");
-      modal.classList.remove("hidden");
-      setTimeout(()=>closeModal.focus(), 0);
-    }
-    function hideModal(){ modal.classList.add("hidden"); }
-
-    document.querySelectorAll(".slotBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=> openModal(btn.dataset.slot));
+    resetBtn.addEventListener("click", () => {
+      state.sport = null;
+      state.city = "Toutes";
+      state.q = "";
+      state.minPrice = "";
+      state.maxPrice = "";
+      state.availableOnly = false;
+      state.sort = "recommended";
+      qInput.value = "";
+      minPrice.value = "";
+      maxPrice.value = "";
+      availableOnly.checked = false;
+      sortSel.value = "recommended";
+      renderSportChips();
+      renderCities();
+      render();
     });
 
-    closeModal.addEventListener("click", hideModal);
-    window.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape"){
-        if(!modal.classList.contains("hidden")) hideModal();
-        if(!$("reviewModal").classList.contains("hidden")) $("reviewModal").classList.add("hidden");
+    // Keyboard shortcut: Cmd/Ctrl+K focus search
+    window.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        qInput.focus();
       }
     });
-    modal.addEventListener("click", (e)=>{
-      if(e.target === modal.firstElementChild) hideModal();
-    });
 
-    confirmBooking.addEventListener("click", ()=>{
-      const type = $("sessionType").value;
-      const note = $("note").value.trim();
-
-      // Save to localStorage as "pending booking"
-      const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
-      bookings.unshift({
-        id: Date.now(),
-        coachId: coach.id,
-        coachName: coach.name,
-        sport: coach.sport,
-        city: coach.city,
-        slot: chosenSlot,
-        type,
-        note,
-        price: coach.price,
-        status: "pending",
-        createdAt: new Date().toISOString()
-      });
-      localStorage.setItem("bookings", JSON.stringify(bookings));
-      toast.classList.remove("hidden");
-    });
-
-    // Review modal
-    const reviewModal = $("reviewModal");
-    $("addReviewBtn").addEventListener("click", ()=> reviewModal.classList.remove("hidden"));
-    $("closeReview").addEventListener("click", ()=> reviewModal.classList.add("hidden"));
-    reviewModal.addEventListener("click", (e)=>{
-      if(e.target === reviewModal.firstElementChild) reviewModal.classList.add("hidden");
-    });
-
-    $("saveReview").addEventListener("click", ()=>{
-      const n = $("rName").value.trim() || "Anonyme";
-      const r = parseInt($("rRating").value, 10);
-      const m = $("rMsg").value.trim();
-      if(!m){ alert("Message obligatoire"); return; }
-
-      coach.reviews.unshift({name:n, rating:r, msg:m});
-      $("reviews").innerHTML = coach.reviews.map(reviewCard).join("");
-      $("rName").value = ""; $("rMsg").value = ""; $("rRating").value = "5";
-      reviewModal.classList.add("hidden");
-    });
+    // Init
+    renderSportChips();
+    renderCities();
+    render();
   </script>
 </body>
 </html>

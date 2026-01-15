@@ -15,7 +15,6 @@
 //     require __DIR__ . "/../view/style/home.php";
 // }
 
-$y = $_SERVER['REQUEST_URI'];
+$y = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-var_dump($y);
 ?>
