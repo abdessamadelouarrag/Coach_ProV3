@@ -93,7 +93,7 @@
               </span>
             <?php else: ?>
 
-              <a href="/reservation/store?id=<?= $d['id'] ?>">
+            <a href="coach/done?id=<?= htmlspecialchars($d['id']) ?>&date=<?= urlencode($d['date_dispo']) ?>&start=<?= urlencode($d['start_time']) ?>&end=<?= urlencode($d['end_time']) ?>">
                 <button class="bg-lime-400 text-slate-950 font-semibold px-4 py-2 rounded-xl hover:bg-lime-300 transition">
                   Réserver
                 </button>

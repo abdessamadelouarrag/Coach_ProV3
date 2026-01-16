@@ -10,27 +10,10 @@ require_once __DIR__ . "/../controllers/ErrorController.php";
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$url = $_GET['url'] ?? 'home';
-
-switch ($url) {
-
-    case 'coach/details':
-        (new CoachController())->details();
-        break;
-
-    case 'reservation/store':
-        (new ReservationController())->store();
-        break;
-
-    case 'reservation/done':
-        require __DIR__ . '/view/reservation/doneReserve.php';
-        break;
-
-    default:
-        http_response_code(404);
-        echo "Page not found";
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); 
+if ($base !== '' && strpos($path, $base) === 0) {
+    $path = substr($path, strlen($base));
 }
-
 
 $path = rtrim($path, '/');
 if ($path === '') $path = '/';
