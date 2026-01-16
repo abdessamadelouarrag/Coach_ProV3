@@ -1,30 +1,47 @@
 <?php
-// declare(strict_types=1);
 session_start();
 
-$path = $_SERVER['REQUEST_URI'];
+require_once __DIR__ . "/../controllers/HomeController.php";
+require_once __DIR__ . "/../controllers/AuthController.php";
+require_once __DIR__ . "/../controllers/CoachController.php";
+require_once __DIR__ . "/../controllers/SportifController.php";
 
+// ✅ fix: ignore query string
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// ✅ normalize trailing slash
 $path = rtrim($path, '/');
 if ($path === '') $path = '/';
 
 $routes = [
-    '/'        => ['HomeController', 'index'],
-    '/login'   => ['AuthController', 'login'],
-    '/coach'   => ['CoachController', 'coach'],
-    '/sportif' => ['SportifController', 'sportif'],
+    '/' => ['HomeController', 'index'],
+
+    '/login' => ['AuthController', 'login'],
     '/signup' => ['AuthController', 'signup'],
-    '/details' => ['SportifController', 'details']
+    '/logout' => ['AuthController', 'logout'],
+
+    '/coach' => ['CoachController', 'coach'],
+
+    '/coach/disponibilite' => ['CoachController', 'disponibilite'],
+    '/coach/disponibilite/add' => ['CoachController', 'addDisponibilite'],
+    '/coach/disponibilite/delete' => ['CoachController', 'deleteDisponibilite'],
+
+    '/sportif' => ['SportifController', 'sportif'],
+    '/details' => ['SportifController', 'details'],
 ];
 
-if (!isset($routes[$path])) {
+if (isset($routes[$path])) {
+    [$controller, $method] = $routes[$path];
+
+    $controllerObj = new $controller();
+
+    if (method_exists($controllerObj, $method)) {
+        $controllerObj->$method();
+    } else {
+        http_response_code(500);
+        echo "Method not found.";
+    }
+} else {
     http_response_code(404);
-    echo "404";
-    exit;
+    echo "Page not found.";
 }
-
-[$controller, $method] = $routes[$path];
-
-require __DIR__ . '/../controllers/' . $controller . '.php';
-
-$instance = new $controller();
-$instance->$method();

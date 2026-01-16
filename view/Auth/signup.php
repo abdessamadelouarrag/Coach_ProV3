@@ -120,7 +120,7 @@
                         </div>
                         <div>
                             <label class="text-xs text-slate-400">Combien d'experiences</label>
-                            <input name="coach_price" type="number" placeholder="ex: 2 ans"
+                            <input name="coach_exp" type="number" placeholder="ex: 2 ans"
                                 class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-500 focus:border-cyanx/40" />
                         </div>
                     </div>
@@ -144,7 +144,7 @@
 
                 <div class="text-center text-sm text-slate-400">
                     Déjà inscrit ?
-                    <a href="login.php" class="font-semibold text-slate-200 hover:text-lime">Se connecter</a>
+                    <a href="/login" class="font-semibold text-slate-200 hover:text-lime">Se connecter</a>
                 </div>
             </form>
         </section>
