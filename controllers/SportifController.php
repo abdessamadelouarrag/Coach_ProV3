@@ -53,4 +53,8 @@ class SportifController
 
         require __DIR__ . "/../view/Sportif/detailsCoach.php";
     }
+
+    public function done(){
+        require __DIR__ . "/../view/Sportif/doneReserve.php";
+    }
 }
