@@ -28,7 +28,6 @@ class AuthController
                 exit;
             }
 
-            // ✅ store in session (better)
             $_SESSION['user'] = [
                 'id' => (int)$user['id'],
                 'role' => $user['role'],
@@ -66,7 +65,6 @@ class AuthController
             $password = $_POST['password'] ?? '';
             $role = strtolower(trim($_POST['role'] ?? ''));
 
-            // coach fields (optional)
             $exp_coach = $_POST['coach_exp'] ?? '';
             $bio_coach = $_POST['coach_bio'] ?? '';
             $domain = $_POST['sport'] ?? '';

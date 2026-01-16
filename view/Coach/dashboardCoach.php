@@ -59,7 +59,7 @@
                 <a href="coach-profile.html" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10">
                     Mon profil
                 </a>
-                <a href="login.html" class="rounded-xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-110">
+                <a href="/logout" class="rounded-xl bg-lime px-4 py-2 text-sm font-semibold text-black hover:brightness-110">
                     Logout
                 </a>
             </div>
