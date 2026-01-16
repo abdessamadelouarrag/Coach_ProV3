@@ -21,6 +21,13 @@ class CoachController
     {
         $this->requireCoach();
 
+        $coachModel = new Coach();
+        $id_user = (int)$_SESSION['user']['id'];
+
+        // Get dispos for dashboard
+        $dispos = $coachModel->getDisponibilites($id_user);
+
+
         require __DIR__ . "/../view/Coach/dashboardCoach.php";
     }
 
@@ -41,7 +48,7 @@ class CoachController
         $this->requireCoach();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /coach/disponibilite");
+            header("Location: /coach");
             exit;
         }
 
@@ -52,8 +59,8 @@ class CoachController
         $end   = $_POST['end_time'] ?? '';
 
         if ($date === '' || $start === '' || $end === '' || $end <= $start) {
-            $_SESSION['flash_error'] = "دخل تاريخ ووقت صحيحين (end خاصو يكون أكبر من start).";
-            header("Location: /coach/disponibilite");
+            $_SESSION['flash_error'] = "Date et heures invalides (fin doit être après début).";
+            header("Location: /coach");
             exit;
         }
 
@@ -61,12 +68,12 @@ class CoachController
         $ok = $coachModel->addDisponibilite($id_user, $date, $start, $end);
 
         if (!$ok) {
-            $_SESSION['flash_error'] = "Erreur: disponibilité ربما كاينة من قبل.";
+            $_SESSION['flash_error'] = "Erreur: disponibilité existe déjà ou chevauchement.";
         } else {
-            $_SESSION['flash_success'] = "Disponibilité تزادت بنجاح.";
+            $_SESSION['flash_success'] = "Disponibilité ajoutée avec succès!";
         }
 
-        header("Location: /coach/disponibilite");
+        header("Location: /coach");
         exit;
     }
 
@@ -74,9 +81,14 @@ class CoachController
     {
         $this->requireCoach();
 
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /coach");
+            exit;
+        }
+
+        $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
-            header("Location: /coach/disponibilite");
+            header("Location: /coach");
             exit;
         }
 
@@ -85,7 +97,34 @@ class CoachController
         $coachModel = new Coach();
         $coachModel->deleteDisponibilite($id, $id_user);
 
-        header("Location: /coach/disponibilite");
+        $_SESSION['flash_success'] = "Disponibilité supprimée!";
+        header("Location: /coach");
         exit;
+    }
+
+    public function publicProfile()
+    {
+        // Coach ID from URL query parameter
+        $coachId = (int)($_GET['id'] ?? 0);
+
+        if ($coachId <= 0) {
+            http_response_code(404);
+            echo "Coach not found";
+            exit;
+        }
+
+        $coachModel = new Coach();
+
+        $coachInfo = $coachModel->getCoachById($coachId);
+        
+        if (!$coachInfo) {
+            http_response_code(404);
+            echo "Coach not found";
+            exit;
+        }
+
+        $dispos = $coachModel->getDisponibilites($coachId);
+
+        require __DIR__ . "/../view/Coach/publicProfile.php";
     }
 }

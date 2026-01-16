@@ -6,30 +6,35 @@ require_once __DIR__ . "/../controllers/AuthController.php";
 require_once __DIR__ . "/../controllers/CoachController.php";
 require_once __DIR__ . "/../controllers/SportifController.php";
 
-// ✅ fix: ignore query string
+// Get clean path without query string
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// ✅ normalize trailing slash
+// Normalize trailing slash
 $path = rtrim($path, '/');
 if ($path === '') $path = '/';
 
+// Define all routes
 $routes = [
     '/' => ['HomeController', 'index'],
 
+    // Auth routes
     '/login' => ['AuthController', 'login'],
     '/signup' => ['AuthController', 'signup'],
     '/logout' => ['AuthController', 'logout'],
 
+    // Coach routes
     '/coach' => ['CoachController', 'coach'],
-
+    '/coach/profile' => ['CoachController', 'publicProfile'],
     '/coach/disponibilite' => ['CoachController', 'disponibilite'],
-    '/coach/disponibilite/add' => ['CoachController', 'addDisponibilite'],
-    '/coach/disponibilite/delete' => ['CoachController', 'deleteDisponibilite'],
+    '/coach/addDisponibilite' => ['CoachController', 'addDisponibilite'],
+    '/coach/deleteDisponibilite' => ['CoachController', 'deleteDisponibilite'],
 
+    // Sportif routes
     '/sportif' => ['SportifController', 'sportif'],
     '/details' => ['SportifController', 'details'],
 ];
 
+// Route matching
 if (isset($routes[$path])) {
     [$controller, $method] = $routes[$path];
 
