@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . "/../model/Coach.php";
+require_once __DIR__ . "/../model/Coach.php";
 
 class CoachController
 {
@@ -26,7 +26,6 @@ class CoachController
 
         // Get dispos for dashboard
         $dispos = $coachModel->getDisponibilites($id_user);
-
 
         require __DIR__ . "/../view/Coach/dashboardCoach.php";
     }
@@ -115,16 +114,39 @@ class CoachController
 
         $coachModel = new Coach();
 
-        $coachInfo = $coachModel->getCoachById($coachId);
-        
-        if (!$coachInfo) {
+        $coach = $coachModel->getCoachById($coachId);  // Changed from $coachInfo
+
+        if (!$coach) {
             http_response_code(404);
             echo "Coach not found";
             exit;
         }
 
+        $profile = $coachModel->getCoachProfile($coachId);  // Added this line
         $dispos = $coachModel->getDisponibilites($coachId);
 
-        require __DIR__ . "/../view/Coach/publicProfile.php";
+        require __DIR__ . "/../view/Sportif/detailsCoach.php";
+    }
+
+    public function details()
+    {
+        $coachId = (int)($_GET['id'] ?? 0);
+        if ($coachId <= 0) {
+            http_response_code(404);
+            die("Coach id missing");
+        }
+
+        $coachModel = new Coach();
+
+        $coach = $coachModel->getCoachById($coachId);
+        if (!$coach) {
+            http_response_code(404);
+            die("Coach not found");
+        }
+
+        $profile = $coachModel->getCoachProfile($coachId);
+        $dispos  = $coachModel->getDisponibilites($coachId);
+
+        require __DIR__ . '/../view/Sportif/detailsCoach.php';
     }
 }

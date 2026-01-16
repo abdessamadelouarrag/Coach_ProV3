@@ -17,7 +17,6 @@ class Auth
         try {
             $this->pdo->beginTransaction();
 
-            // INSERT user + get id (PostgreSQL)
             $sql = "INSERT INTO users (email, full_name, password, role)
                     VALUES (:email, :fullname, :password, :role)
                     RETURNING id";
@@ -32,7 +31,6 @@ class Auth
 
             $user_id = (int)$stmt->fetchColumn();
 
-            // if coach => insert coach profile
             if ($role === "coach") {
                 $sqlCoach = "INSERT INTO coach_profiles (bio, exp, domain, id_user)
                 VALUES (:bio, :exp, :domain, :id_user)";

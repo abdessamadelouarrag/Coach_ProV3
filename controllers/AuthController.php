@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . "/../model/Auth.php";
+require __DIR__ . "/../model/Coach.php";
 
 class AuthController
 {
@@ -41,10 +42,12 @@ class AuthController
             if ($user['role'] === 'coach') {
                 header("Location: /coach");
                 exit;
-            } elseif ($user['role'] === 'sportif') {
+            }
+            if ($user['role'] === 'sportif') {
                 header("Location: /sportif");
                 exit;
-            } else {
+            } 
+            else {
                 header("Location: /");
                 exit;
             }
