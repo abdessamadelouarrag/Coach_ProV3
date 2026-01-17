@@ -41,20 +41,17 @@ class SportifController
         }
 
         $coachModel = new Coach();
-        $coachInfo = $coachModel->getCoachById($coachId);
+        $coach = $coachModel->getCoachById($coachId);
         
-        if (!$coachInfo) {
+        if (!$coach) {
             $_SESSION['flash_error'] = "Coach introuvable";
             header("Location: /sportif");
             exit;
         }
 
+        $profile = $coachModel->getCoachProfile($coachId);
         $dispos = $coachModel->getDisponibilites($coachId);
 
         require __DIR__ . "/../view/Sportif/detailsCoach.php";
-    }
-
-    public function done(){
-        require __DIR__ . "/../view/Sportif/doneReserve.php";
     }
 }

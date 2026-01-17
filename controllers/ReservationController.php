@@ -26,7 +26,7 @@ class ReservationController
 
         if ($id_dispo <= 0) {
             $_SESSION['flash_error'] = "Disponibilité invalide.";
-            header("Location: /error");
+            header("Location: /sportif");
             exit;
         }
 
@@ -36,29 +36,15 @@ class ReservationController
         $success = $reservationModel->createReservation($id_sportif, $id_dispo);
 
         if ($success) {
-            $_SESSION['flash_success'] = "Réservation confirmée avec succès!";
-            $coachModel = new Coach();
-            $stmt = Database::getInstance()->getConnection()->prepare("
-                SELECT id_coach FROM disponibilites WHERE id = :id
-            ");
-            $stmt->execute([':id' => $id_dispo]);
-            $dispo = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($dispo) {
-                $coach = $coachModel->getCoachById($dispo['id_coach']);
-                $profile = $coachModel->getCoachProfile($dispo['id_coach']);
-                require __DIR__ . "/../view/Sportif/doneReserve.php";
-            } else {
-                header("Location: /reservations");
-            }
+            $_SESSION['flash_success'] = "Réservation effectuée avec succès! En attente de confirmation du coach.";
+            header("Location: /reservations");
         } else {
             $_SESSION['flash_error'] = "Erreur: Ce créneau est déjà réservé ou n'existe plus.";
-            header("Location: /error");
+            header("Location: /sportif");
         }
         exit;
     }
 
- 
     public function myReservations()
     {
         $this->requireSportif();
@@ -97,33 +83,5 @@ class ReservationController
 
         header("Location: /reservations");
         exit;
-    }
-
-    public function store()
-    {
-        session_start();
-
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: ?url=auth/login");
-            exit;
-        }
-
-        $coachId = (int)($_GET['coach_id'] ?? 0);
-        $dispoId = (int)($_GET['dispo_id'] ?? 0);
-
-        if ($coachId <= 0 || $dispoId <= 0) {
-            die("coach_id or dispo_id missing");
-        }
-
-        $reservation = new Reservation();
-        $reservation->createReservation($_SESSION['user_id'], $coachId, $dispoId);
-
-        header("Location: ?url=reservation/done");
-        exit;
-    }
-
-    public function done()
-    {
-        require __DIR__ . "/../view/Sportif/doneReserve.php";
     }
 }

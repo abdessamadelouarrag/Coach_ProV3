@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../model/Coach.php";
+require_once __DIR__ . "/../model/Reservation.php";
 
 class CoachController
 {
@@ -22,10 +23,14 @@ class CoachController
         $this->requireCoach();
 
         $coachModel = new Coach();
+        $reservationModel = new Reservation();
         $id_user = (int)$_SESSION['user']['id'];
 
         // Get dispos for dashboard
         $dispos = $coachModel->getDisponibilites($id_user);
+        
+        // Get reservations for this coach
+        $reservations = $reservationModel->getReservationsByCoach($id_user);
 
         require __DIR__ . "/../view/Coach/dashboardCoach.php";
     }
@@ -101,31 +106,62 @@ class CoachController
         exit;
     }
 
-    public function publicProfile()
+    public function acceptReservation()
     {
-        // Coach ID from URL query parameter
-        $coachId = (int)($_GET['id'] ?? 0);
+        $this->requireCoach();
 
-        if ($coachId <= 0) {
-            http_response_code(404);
-            echo "Coach not found";
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /coach");
             exit;
         }
 
-        $coachModel = new Coach();
-
-        $coach = $coachModel->getCoachById($coachId);  // Changed from $coachInfo
-
-        if (!$coach) {
-            http_response_code(404);
-            echo "Coach not found";
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            header("Location: /coach");
             exit;
         }
 
-        $profile = $coachModel->getCoachProfile($coachId);  // Added this line
-        $dispos = $coachModel->getDisponibilites($coachId);
+        $id_user = (int)$_SESSION['user']['id'];
+        $reservationModel = new Reservation();
+        $success = $reservationModel->acceptReservation($id, $id_user);
 
-        require __DIR__ . "/../view/Sportif/detailsCoach.php";
+        if ($success) {
+            $_SESSION['flash_success'] = "Réservation acceptée!";
+        } else {
+            $_SESSION['flash_error'] = "Erreur lors de l'acceptation.";
+        }
+
+        header("Location: /coach");
+        exit;
+    }
+
+    public function refuseReservation()
+    {
+        $this->requireCoach();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /coach");
+            exit;
+        }
+
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            header("Location: /coach");
+            exit;
+        }
+
+        $id_user = (int)$_SESSION['user']['id'];
+        $reservationModel = new Reservation();
+        $success = $reservationModel->refuseReservation($id, $id_user);
+
+        if ($success) {
+            $_SESSION['flash_success'] = "Réservation refusée!";
+        } else {
+            $_SESSION['flash_error'] = "Erreur lors du refus.";
+        }
+
+        header("Location: /coach");
+        exit;
     }
 
     public function details()

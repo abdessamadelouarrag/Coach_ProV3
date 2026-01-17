@@ -33,18 +33,21 @@ $routes = [
 
     // Coach routes
     '/coach' => ['CoachController', 'coach'],
-    '/coach/profile' => ['CoachController', 'publicProfile'],
     '/coach/disponibilite' => ['CoachController', 'disponibilite'],
     '/coach/addDisponibilite' => ['CoachController', 'addDisponibilite'],
     '/coach/deleteDisponibilite' => ['CoachController', 'deleteDisponibilite'],
+    '/coach/acceptReservation' => ['CoachController', 'acceptReservation'],
+    '/coach/refuseReservation' => ['CoachController', 'refuseReservation'],
 
     // Sportif routes
     '/sportif' => ['SportifController', 'sportif'],
-    '/details' => ['SportifController', 'details'],
+    '/sportif/details' => ['SportifController', 'details'],
 
-    '/coach/done' => ['ReservationController', 'reserve'],
+    // Reservation routes
+    '/reserve' => ['ReservationController', 'reserve'],
     '/reservations' => ['ReservationController', 'myReservations'],
     '/reservation/cancel' => ['ReservationController', 'cancel'],
+    
     '/error' => ['ErrorController', 'error'],
 ];
 

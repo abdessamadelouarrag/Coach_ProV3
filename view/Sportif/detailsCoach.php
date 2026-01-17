@@ -11,7 +11,7 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen">
 
     <div class="max-w-5xl mx-auto p-6">
-        <a href="/home" class="text-slate-300 hover:text-white">← Back</a>
+        <a href="/sportif" class="text-slate-300 hover:text-white">← Back</a>
 
         <!-- Flash Messages -->
         <?php if (isset($_SESSION['flash_success'])): ?>
@@ -68,13 +68,15 @@
                     <?php foreach ($dispos as $d): ?>
                         <?php
                         $stmt = Database::getInstance()->getConnection()->prepare("
-              SELECT id FROM reservations WHERE id_disponibilite = :id_dispo
-            ");
+                            SELECT id, status FROM reservations WHERE id_disponibilite = :id_dispo
+                        ");
                         $stmt->execute([':id_dispo' => $d['id']]);
-                        $isReserved = $stmt->fetch() !== false;
+                        $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $isReserved = $reservation !== false;
+                        $status = $reservation ? $reservation['status'] : '';
                         ?>
 
-                        <div class="flex items-center justify-between gap-4 bg-white/5 border border-white/10 rounded-2xl p-4 <?= $isReserved ? 'opacity-50' : 'hover:bg-white/10' ?> transition">
+                        <div class="flex items-center justify-between gap-4 bg-white/5 border border-white/10 rounded-2xl p-4 <?= $isReserved ? 'opacity-70' : 'hover:bg-white/10' ?> transition">
                             <div>
                                 <div class="text-sm text-slate-400">📅 <?= htmlspecialchars($d['date_dispo']) ?></div>
                                 <div class="mt-1 flex items-center gap-2">
@@ -86,6 +88,27 @@
                                         <?= htmlspecialchars($d['end_time']) ?>
                                     </span>
                                 </div>
+                                <?php if ($isReserved): ?>
+                                    <div class="mt-2">
+                                        <?php if ($status === 'pending'): ?>
+                                            <span class="px-2 py-1 rounded-lg bg-yellow-500/20 text-yellow-300 text-xs">
+                                                ⏳ En attente
+                                            </span>
+                                        <?php elseif ($status === 'confirmed'): ?>
+                                            <span class="px-2 py-1 rounded-lg bg-green-500/20 text-green-300 text-xs">
+                                                ✓ Confirmé
+                                            </span>
+                                        <?php elseif ($status === 'refused'): ?>
+                                            <span class="px-2 py-1 rounded-lg bg-red-500/20 text-red-300 text-xs">
+                                                ✗ Refusé
+                                            </span>
+                                        <?php elseif ($status === 'cancelled'): ?>
+                                            <span class="px-2 py-1 rounded-lg bg-gray-500/20 text-gray-300 text-xs">
+                                                ⊘ Annulé
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Reservation button -->
@@ -94,8 +117,8 @@
                                     Réservé
                                 </span>
                             <?php else: ?>
-
-                                <a href="/coach/done?id=<?= htmlspecialchars($d['id']) ?>&date=<?= urlencode($d['date_dispo']) ?>&start=<?= urlencode($d['start_time']) ?>&end=<?= urlencode($d['end_time']) ?>"> <button class="bg-lime-400 text-slate-950 font-semibold px-4 py-2 rounded-xl hover:bg-lime-300 transition">
+                                <a href="/reserve?id=<?= htmlspecialchars($d['id']) ?>">
+                                    <button class="bg-lime-400 text-slate-950 font-semibold px-4 py-2 rounded-xl hover:bg-lime-300 transition">
                                         Réserver
                                     </button>
                                 </a>

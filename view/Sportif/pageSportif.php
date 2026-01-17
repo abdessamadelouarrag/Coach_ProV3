@@ -87,7 +87,7 @@
         </div>
       <?php else: ?>
         <?php foreach($all as $coach): ?>
-          <a href="/coach/profile?id=<?= (int)$coach['coach_id'] ?>" class="group overflow-hidden rounded-[26px] border border-white/10 bg-white/5 shadow-soft transition hover:-translate-y-0.5 hover:border-lime/30 block">             
+          <a href="/sportif/details?id=<?= $coach['coach_id'] ?>" class="group overflow-hidden rounded-[26px] border border-white/10 bg-white/5 shadow-soft transition hover:-translate-y-0.5 hover:border-lime/30 block">             
             <div class="relative aspect-[4/3] bg-gradient-to-br from-cyanx/20 to-lime/20">
               <div class="absolute inset-0 bg-gradient-to-t from-carbon/90 via-carbon/40 to-transparent"></div>
               
