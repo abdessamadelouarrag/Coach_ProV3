@@ -92,7 +92,7 @@
                                     <div class="mt-2">
                                         <?php if ($status === 'pending'): ?>
                                             <span class="px-2 py-1 rounded-lg bg-yellow-500/20 text-yellow-300 text-xs">
-                                                ⏳ En attente
+                                                En attente
                                             </span>
                                         <?php elseif ($status === 'confirmed'): ?>
                                             <span class="px-2 py-1 rounded-lg bg-green-500/20 text-green-300 text-xs">

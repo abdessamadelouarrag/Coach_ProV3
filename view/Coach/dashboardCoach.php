@@ -50,7 +50,7 @@
                                     <p class="text-sm text-slate-400"><?= htmlspecialchars($res['sportif_email']) ?></p>
                                     
                                     <div class="mt-3 flex items-center gap-2">
-                                        <span class="text-slate-300">📅 <?= htmlspecialchars($res['date_dispo']) ?></span>
+                                        <span class="text-slate-300"><?= htmlspecialchars($res['date_dispo']) ?></span>
                                     </div>
                                     
                                     <div class="mt-2 flex items-center gap-2">
@@ -66,7 +66,7 @@
                                     <div class="mt-2">
                                         <?php if ($res['status'] === 'pending'): ?>
                                             <span class="px-3 py-1 rounded-lg bg-yellow-500/20 text-yellow-300 text-sm">
-                                                ⏳ En attente
+                                                En attente
                                             </span>
                                         <?php elseif ($res['status'] === 'confirmed'): ?>
                                             <span class="px-3 py-1 rounded-lg bg-green-500/20 text-green-300 text-sm">
@@ -149,7 +149,7 @@
                     <?php foreach ($dispos as $d): ?>
                         <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-4">
                             <div>
-                                <div class="text-sm text-slate-400">📅 <?= htmlspecialchars($d['date_dispo']) ?></div>
+                                <div class="text-sm text-slate-400"><?= htmlspecialchars($d['date_dispo']) ?></div>
                                 <div class="mt-1 flex items-center gap-2">
                                     <span class="px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs">
                                         <?= htmlspecialchars($d['start_time']) ?>

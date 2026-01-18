@@ -52,7 +52,7 @@
                                         <div>
                                             <?php if ($res['status'] === 'pending'): ?>
                                                 <span class="px-3 py-1 rounded-lg bg-yellow-500/20 text-yellow-300 text-sm font-semibold">
-                                                    ⏳ En attente
+                                                    En attente
                                                 </span>
                                             <?php elseif ($res['status'] === 'confirmed'): ?>
                                                 <span class="px-3 py-1 rounded-lg bg-green-500/20 text-green-300 text-sm font-semibold">

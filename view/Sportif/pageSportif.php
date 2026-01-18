@@ -115,7 +115,7 @@
                   </div>
                 </div>
                 <div class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm whitespace-nowrap">
-                  📅 <span class="font-semibold text-white"><?= (int)($coach['exp'] ?? 0) ?>+ ans</span>
+                  <span class="font-semibold text-white"><?= (int)($coach['exp'] ?? 0) ?>+ ans</span>
                 </div>
               </div>
 

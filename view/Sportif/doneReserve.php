@@ -75,7 +75,7 @@
       <!-- Info Message -->
       <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
         <p class="text-sm text-blue-200">
-          💡 Un email de confirmation a été envoyé. N'oubliez pas d'arriver 5 minutes en avance !
+          Un email de confirmation a été envoyé. N'oubliez pas d'arriver 5 minutes en avance !
         </p>
       </div>
     </div>
