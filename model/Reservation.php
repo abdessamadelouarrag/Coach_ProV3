@@ -12,7 +12,6 @@ class Reservation
 
     public function createReservation($id_sportif, $id_disponibilite)
     {
-        // Check if disponibilite exists and is not reserved
         $stmt = $this->db->prepare("
             SELECT d.id, d.id_user as id_coach, d.date_dispo, d.start_time, d.end_time
             FROM coach_disponibilites d
@@ -26,7 +25,6 @@ class Reservation
             return false;
         }
 
-        // Check if sportif already has a reservation with this coach at this time
         $stmt = $this->db->prepare("
             SELECT r.id 
             FROM reservations r
@@ -47,7 +45,6 @@ class Reservation
             return false;
         }
 
-        // Create reservation with 'pending' status
         $stmt = $this->db->prepare("
             INSERT INTO reservations (id_sportif, id_disponibilite, status, created_at)
             VALUES (:id_sportif, :id_disponibilite, 'pending', NOW())
@@ -113,9 +110,10 @@ class Reservation
     {
         $stmt = $this->db->prepare("
             UPDATE reservations r
-            JOIN coach_disponibilites d ON d.id = r.id_disponibilite
-            SET r.status = 'cancelled'
-            WHERE r.id = :id 
+            SET status = 'cancelled'
+            FROM coach_disponibilites d
+            WHERE r.id_disponibilite = d.id
+            AND r.id = :id 
             AND (r.id_sportif = :id_user OR d.id_user = :id_user)
         ");
         return $stmt->execute([
@@ -128,9 +126,10 @@ class Reservation
     {
         $stmt = $this->db->prepare("
             UPDATE reservations r
-            JOIN coach_disponibilites d ON d.id = r.id_disponibilite
-            SET r.status = 'confirmed'
-            WHERE r.id = :id 
+            SET status = 'confirmed'
+            FROM coach_disponibilites d
+            WHERE r.id_disponibilite = d.id
+            AND r.id = :id 
             AND d.id_user = :id_coach
             AND r.status = 'pending'
         ");
@@ -144,9 +143,10 @@ class Reservation
     {
         $stmt = $this->db->prepare("
             UPDATE reservations r
-            JOIN coach_disponibilites d ON d.id = r.id_disponibilite
-            SET r.status = 'refused'
-            WHERE r.id = :id 
+            SET status = 'refused'
+            FROM coach_disponibilites d
+            WHERE r.id_disponibilite = d.id
+            AND r.id = :id 
             AND d.id_user = :id_coach
             AND r.status = 'pending'
         ");

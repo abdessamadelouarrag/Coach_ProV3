@@ -21,11 +21,9 @@ class SportifController
     {
         $this->requireSportif();
 
-        // Get all coaches with their profiles
         $coachModel = new Coach();
         $all = $coachModel->allCoach();
 
-        // Pass data to view
         require __DIR__ . "/../view/Sportif/pageSportif.php";
     }
 

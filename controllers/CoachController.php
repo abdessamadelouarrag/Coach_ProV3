@@ -26,10 +26,8 @@ class CoachController
         $reservationModel = new Reservation();
         $id_user = (int)$_SESSION['user']['id'];
 
-        // Get dispos for dashboard
         $dispos = $coachModel->getDisponibilites($id_user);
         
-        // Get reservations for this coach
         $reservations = $reservationModel->getReservationsByCoach($id_user);
 
         require __DIR__ . "/../view/Coach/dashboardCoach.php";
